@@ -1,0 +1,13 @@
+DECLARE @PatientID BIGINT
+SET @PatientID=6
+
+SELECT     PaymentStatus.Status, Payments.Balance, Payments.Amount, Payments.PatientID, Payments.PayerID, Charges.[Billing-Fee], EncPayment.Adjustment, 
+                      Provider.Name, Encounter.EncounterDate, Encounter.EncounterID
+FROM         Encounter LEFT OUTER JOIN
+                      EncPayment ON Encounter.EncounterID = EncPayment.EncounterID LEFT OUTER JOIN
+                      Appointment ON Encounter.ApptID = Appointment.ApptID LEFT OUTER JOIN
+                      PaymentStatus ON Encounter.PaymentStatusID = PaymentStatus.PaymentStatusID LEFT OUTER JOIN
+                      Provider ON Appointment.ProviderID = Provider.ProviderID LEFT OUTER JOIN
+                      Payments ON EncPayment.PaymentID = Payments.PaymentID LEFT OUTER JOIN
+                      Charges ON Encounter.EncounterID = Charges.EncounterID AND EncPayment.ChargeID = Charges.ChargeID                      
+WHERE Encounter.PatientID=@PatientID

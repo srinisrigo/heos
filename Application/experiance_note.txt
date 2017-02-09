@@ -1,0 +1,1 @@
+select Experience as yes, if you are applying for the programme and do not have any formal education and are over 30 years of age with <u>7 or more years</u> of full-time relevant experience

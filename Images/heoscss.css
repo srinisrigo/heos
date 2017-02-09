@@ -1,0 +1,79 @@
+/* CSS Document 3162A6 */
+*{
+font-family:Calibri; // System, Verdana, Arial, Helvetica, sans-serif, Lucida Fax, Lucida Sans, Courier New;
+font-size:12px; //  11px
+font-weight:600;
+}
+
+table { background:#D2D1CE;  //   #FFFFFF;
+}
+
+tr {
+background:#ffffff;
+color:#3162A6;  // 3162A6
+}
+
+th {
+background:#efefef;
+color:#800000;
+padding:3px;
+font-weight:600;
+}
+
+td {
+padding-left:4px;
+padding-right:3px;
+background:#ffffff;
+vertical-align:baseline;
+}
+
+input[type="text"] {
+background:#F0F4FB;
+color:#3162A6;
+}
+
+select {
+background:#F0F4FB;
+color:#3162A6;
+}
+
+textarea {
+background:#F0F4FB;
+color:#3162A6;
+}
+
+input[type="text"]:focus {
+background:#F3F3F3;
+color:#660000;
+}
+
+select:focus {
+background:#F3F3F3;
+color:#660000;
+}
+
+textarea:focus {
+background:#F3F3F3;
+color:#660000;
+}
+
+input[type="submit"],input[type="button"]{
+background-color:#F9F9F9;
+border:solid;
+border-width:1px;
+border-color:#033264;
+color:#033264;
+font-weight:800;
+}
+input[type="submit"]:hover,input[type="button"]:hover{
+background-color:#033264;
+border:solid;
+border-width:1px;
+border-color:#033264;
+color:#ffffff;
+font-weight:bold;
+}
+
+a {
+vertical-align:text-bottom;
+}

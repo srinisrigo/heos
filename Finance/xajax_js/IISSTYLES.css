@@ -1,0 +1,111 @@
+ 
+INPUT
+{
+width:120px;
+height:20px;
+}
+
+.button
+{
+width:100px;
+height:25px;
+text-align:center;
+font-family:Verdana;
+font-style:normal;
+font-size:11px;
+font-weight:600;
+background:url(images/Butt.gif);border-style:solid; border-width:thin; border-color:#FFFFFF;
+cursor:pointer;
+}
+
+.rdbclass
+{
+width:20px;
+}
+
+.browsebuttclass
+{
+width:175px;
+}
+
+a
+{
+color:#393939;
+}
+
+a:hover
+{
+	color:#FE7F03;
+	text-decoration:blink;
+	
+}
+a:out
+{
+color:#393939;
+}
+body,td,th {
+	font-family: verdana;
+	font-size: 12px;
+	
+}
+
+a:visited {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+
+#Layer1 {
+	position:absolute;
+	width:398px;
+	height:29px;
+	z-index:1;
+	left: 600px;
+	top: 111px;
+}
+
+H1
+{
+COLOR:#FFFFFF;
+font-size:14px;
+font-weight:bold;
+}
+
+.tablestyle
+{
+border:thin silver groove;
+}
+
+.Header
+{
+
+background-color:#F7AB44;
+color:#ffffff;
+font-size:13px;
+font-weight:bold;
+}
+.SubHeader
+{
+
+background-color:#999999;
+color:#ffffff;
+font-size:13px;
+font-weight:bold;
+}
+.fieldstyle
+{
+background-color:#eeeeee;
+
+}
+.fieldstyle1
+{
+background-color:#dedede;
+color:#333333;
+font-weight:bold;
+}
+.comboclass
+{
+width:150px;
+height:20px;
+}
