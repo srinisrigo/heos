@@ -1,16 +1,12 @@
 <?php
-$_HostAddress="localhost";
-$_UserName="root";
-$_Password="admin";
-$con = @mysql_connect($_HostAddress,$_UserName,$_Password);
-if (!$con){
+$_HostAddress="172.26.0.2";
+$_UserName="admin";
+$_Password="Szigony123$";
+$_DatabaseName="heos";
+$con = new mysqli($_HostAddress,$_UserName,$_Password,$_DatabaseName);
+if ($con->connect_error){
    echo( "<p>Unable to connect to database manager.</p>");
-   die('Could not connect: ' . mysql_error());
+   die('Could not connect: ' . $con->connect_error);
    exit();
 } //else echo("<p>Successfully Connected to MySQL Database Manager!</p>");
-$_DatabaseName="heos";
-if (! @mysql_select_db($_DatabaseName ) ){
-   echo( "<p>Unable to  connect database...</p>");
-   exit();
-} //else echo("<p>Successfully Connected to Database 'MYSQL'!</p>");
 ?>

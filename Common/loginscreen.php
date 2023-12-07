@@ -42,11 +42,12 @@ if(isset($_POST['loginme'])){
 $uname=$_POST['username']; $pwd=$_POST['password'];
 $_SESSION['username']=$uname; $_SESSION['password']=$pwd;
 
-$check=mysql_query("select count(*) from usercreation where UserName='$uname' and Password='$pwd'");
-if(mysql_result($check,0)) {
-$UserType=mysql_query("select UserType from usercreation where UserName='$uname' and Password='$pwd'");
-// $userid=mysql_result($UserType,'UserType'); $UserType=mysql_query("select UserType from usertypemaster where UserId='$userid'");
-$user=mysql_result($UserType,'UserType'); $_SESSION['heosusermode']=$user;
+$check=$con->query("select count(*) from usercreation where UserName='$uname' and Password='$pwd'");
+$rows = $check->fetch_array(MYSQLI_BOTH);
+if(count($rows)) {
+$result=$con->query("select UserType from usercreation where UserName='$uname' and Password='$pwd'");
+$rows = $result->fetch_array(MYSQLI_BOTH);
+$user=$rows["UserType"]; $_SESSION['heosusermode']=$user;
 echo "<script language=\"javascript\">window.location='heos.php';</script> ";
 }
 else echo "<script language=\"javascript\">alert('incorrect User Name Or Password');</script> ";

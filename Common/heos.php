@@ -6,7 +6,7 @@
 <title>Saxon College</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="../Style/heosmain.css">
-<script language="JavaScript" type="text/javascript" src="heosnav.js"></script>
+<script language="JavaScript" type="text/javascript" src="../Scripts/heosnav.js"></script>
 <script>if(window.history.forward(1) != null) window.history.forward(1); </script>
 </head>
 <body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="init();">
@@ -88,13 +88,17 @@ if($_SESSION['heosusermode']==1 || $_SESSION['heosusermode']==2) return 1;
 else {
 $usertype=$_SESSION['heosusermode'];
 
-$echeck=mysql_query("select count(ScreenId) from screenrights where UserType='$usertype'");
-$isavail=mysql_result($echeck,'ScreenId');
+$echeck=$con->query("select count(ScreenId) from screenrights where UserType='$usertype'");
+$rows = $echeck->fetch_array(MYSQLI_BOTH);
+$isavail=$rows["ScreenId"];
 if($isavail == 0) return 0;
 if($isavail >= 1){
-$sresult=mysql_query("select ScreenId from screenmaster where ScreenName='$scrname'"); $screenid=mysql_result($sresult,'ScreenId');
+$sresult=$con->query("select ScreenId from screenmaster where ScreenName='$scrname'");
+$screenid=$sresult["ScreenId"];
 if(empty($screenid)) echo "<script language=\"javascript\">alert('$scrname');</script>";
-$result=mysql_query("select count(ScreenId) from screenrights where ScreenId='$screenid' and UserType='$usertype'"); $exist=mysql_result($result,'ScreenId');
+$result=$con->query("select count(ScreenId) from screenrights where ScreenId='$screenid' and UserType='$usertype'");
+$crows = $result->fetch_array(MYSQLI_BOTH);
+$exist=$sresult["crows"];
 if($exist) return 1; else return 0; }
 } // username else
 }
