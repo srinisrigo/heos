@@ -10,7 +10,7 @@ include "../DataBase/dbconnection.php";
 
 <?php
 print "<body><form action=\"screenmaster.php\" method=\"post\">
-<table border=0 cellspacing=1 cellpadding=0>
+<table border=0 cellspacing=1 cellpadding=0 align=center>
 <tr><th colspan=3>Screen Master</th></tr>
 <tr><td>Screen Name</td><td><input type=\"text\" name=\"screenname\" onKeyPress=\"return keyRestrict(event,'abcdefghijklmnopqrstuvwxyz0123456789 '+String.fromCharCode(241))\"></td>
 <td><input type=\"submit\" name=\"btnsubmit\" value=\"Add\"></td>
@@ -66,12 +66,12 @@ fillpage($page);
 if(isset($_POST['btnsubmit']))
 {
 $screenname=$_POST['screenname'];
-$queryscreencount=mysql_query("select count(ScreenName) from screenmaster where ScreenName='$screenname'",$con);
-$screencount=mysql_result($queryscreencount,0);
+$queryscreencount=$GLOBALS['db']->query("select count(ScreenName) from screenmaster where ScreenName='$screenname'")->rows;
+$screencount=$queryscreencount[0][0];
 
 if($screencount==0)
 {
-$queryscreeninsert=mysql_query("insert into  screenmaster values('','$screenname')",$con);
+$queryscreeninsert=$GLOBALS['db']->query("insert into  screenmaster values('','$screenname')")->rows;
 if($queryscreeninsert) echo "<script langauge=\"javascript\">alert('Successfully Inserted')</script>";
 screenfil();
 }
@@ -89,29 +89,27 @@ function fillpage($page)
 $_SESSION['pagevalueforscreenmaster']=$page;
 $page  = (int) $page;
 $limit = 10;
-$result = mysql_query("select count(*) from screenmaster",$con);
-$total = mysql_result($result, 0);
+$result = $GLOBALS['db']->query("select count(screenid) as screens from screenmaster")->rows;
+$total = $result[0]['screens'];
 $pager  = getPagerData($total, $limit, $page);
 if($total==0){$offset=0;}
 else{$offset = $pager->offset;}
 $limit  = $pager->limit;
 $page   = $pager->page;
-$queryselectscreen="select * from screenmaster order by ScreenName limit $offset,$limit";
-$queryselectscreenexec=mysql_query($queryselectscreen,$con);
 
-print "<form action=\"screenmaster.php\" method=\"post\">
-<br><table border=0 cellspacing=1 cellpadding=0>
+print "<form action=\"screenmaster.php\" method=\"post\" style=\"position:center; top:0px; left: 0px;\">
+<br><table border=0 cellspacing=1 cellpadding=0 align=center>
 <tr><th>S.No</th><th>Sreen Name</th><th colspan=2>&nbsp;</th></tr>\n";
+$screenmasters = $GLOBALS['db']->query("select * from screenmaster order by ScreenName limit $offset,$limit")->rows;
 $sno=1;
-while($Fetch=mysql_fetch_array($queryselectscreenexec))
-{
-$screenid=$Fetch["ScreenId"];
-$screenname=$Fetch["ScreenName"];
-print "<tr><td name=d[] value=\"$sno\">$sno</td>
-<td>$screenname</td><input type=\"hidden\" name=\"screenid[]\" value=\"$screenid\"><td>
-<input type=\"submit\" name=\"btnedit[$screenid]\" value=\"Edit\"></td>
-<td><input type=\"submit\" name=\"btndelete[$screenid]\"  value=\"Delete\"></td></tr>\n";
-$sno=$sno+1;
+foreach($screenmasters as $screenmaster) {
+    $screenid=$screenmaster["ScreenId"];
+    $screenname=$screenmaster["ScreenName"];
+    print "<tr><td name=d[] value=\"$sno\">$sno</td>
+    <td>$screenname</td><input type=\"hidden\" name=\"screenid[]\" value=\"$screenid\"><td>
+    <input type=\"submit\" name=\"btnedit[$screenid]\" value=\"Edit\"></td>
+    <td><input type=\"submit\" name=\"btndelete[$screenid]\"  value=\"Delete\"></td></tr>\n";
+    $sno=$sno+1;
 }
 print "<tr><td align=\"center\" colspan=\"4\">\n";
 if ($page == 1) // this is the first page - there is no previous page
@@ -157,21 +155,20 @@ function editfill()
 {
 $page=$_SESSION['pagevalueforscreenmaster'];
 $limit = 10;
-$result =mysql_query("select count(*) from screenmaster",$con);
-$total = mysql_result($result, 0);
+$result =$GLOBALS['db']->query("select count(screenid) as screenid from screenmaster")->rows;
+$total = $result[0]["screenid"];
 $pager  = getPagerData($total, $limit, $page);
 $offset = $pager->offset;
 $limit  = $pager->limit;
 $page   = $pager->page;
 $arrayscreen=$_SESSION['screenafteredit'];
 $queryselectScreen ="select * from screenmaster order by ScreenName limit $offset,$limit";
-$queryselectScreenexec=mysql_query($queryselectScreen,$con);
+$queryselectScreenexec=$GLOBALS['db']->query($queryselectScreen)->rows;
 print "<form action=\"screenmaster.php\" method=\"post\">
 <br><table align=center border=0 cellspacing=1 cellpadding=0>
 <tr><th>S.No</th><th>Screen Name</th><th colspan=2>&nbsp;</th></tr>\n";
 $sno=1;
-while($EFetch=mysql_fetch_array($queryselectScreenexec))
-{
+foreach($queryselectScreenexec as $EFetch) {
 $screenid=$EFetch["ScreenId"];
 $screenname=$EFetch["ScreenName"];
 if(array_key_exists($screenid,$arrayscreen))
@@ -220,8 +217,8 @@ $screenname=$_POST['screenname'][0];
 $screenidarray=array();
 $screenidarray=array_keys($screenidforupdate);
 $screenid=$screenidarray[0];
-$queryscreenexist=mysql_query("select count(*) from screenmaster where ScreenName='$screenname'",$con);
-$screencount=mysql_result($queryscreenexist,0);
+$queryscreenexist=$GLOBALS['db']->query("select count(screenid) as screenid from screenmaster where ScreenName='$screenname'")->rows;
+$screencount=$queryscreenexist[0]["screenid"];
 $screennamelen=strlen($screenname);
 
 for ($i=0;$i<$screennamelen;$i++)
@@ -252,7 +249,7 @@ fillpage($page);
 }
 else
 {
-$queryScreenupdate=mysql_query("update screenmaster set ScreenName='$screenname' where ScreenId='$screenid'",$con);
+$queryScreenupdate=$GLOBALS['db']->query("update screenmaster set ScreenName='$screenname' where ScreenId='$screenid'");
 if($queryScreenupdate) echo "<script langauge=\"javascript\">alert('Updated Successfully!')</script>";
 $page=$_SESSION['pagevalueforscreenmaster'];
 fillpage($page);
@@ -281,12 +278,12 @@ if(isset($cat) and strlen($cat) == 6)
 {
 $screendelete=$_SESSION['screenfordelete'];
 $screenarray=array_keys($screendelete);
-$queryScreenRights=mysql_query("select count(ScreenId) from screenrights where ScreenId='$screenarray[0]'",$con);
-$ScreenrightsTab=mysql_result($queryScreenRights,0);
+$queryScreenRights=$GLOBALS['db']->query("select count(ScreenId) from screenrights where ScreenId='$screenarray[0]'")->rows;
+$ScreenrightsTab=$queryScreenRights[0][0];
 
 if($ScreenrightsTab==0)
 {
-$queryscreendelete=mysql_query("delete from screenmaster where ScreenId='$screenarray[0]'",$con);
+$queryscreendelete=$GLOBALS['db']->query("delete from screenmaster where ScreenId='$screenarray[0]'")->rows;
 if($queryscreendelete) echo "<script langauge=\"javascript\">alert('Successfully Deleted!')</script>";
 $page=$_SESSION['pagevalueforscreenmaster'];
 fillpage($page);

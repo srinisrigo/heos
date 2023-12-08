@@ -2,7 +2,6 @@
 ?>
 <html>
 <head>
-<script src="heoshistorymenu.js" language="javascript1.2" type="text/javascript"></script>
 <title>Saxon College</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="../Style/heosmain.css">
