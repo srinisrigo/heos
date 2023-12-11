@@ -8886,5 +8886,93 @@ function oc_db_schema() {
 		'collate' => 'utf8mb4_general_ci'
 	];
 
+	$tables[] = [
+		'name' => 'bankdetails',
+		'field' => [
+			[
+				'name' => 'recordid',
+				'type' => 'bigint(20)',
+				'not_null' => true,
+				'auto_increment' => true,
+				'zerofill' => true
+			],
+			[
+				'name' => 'accountnumber',
+				'type' => 'int(50)',
+				'not_null' => false,
+				'default' => '0'
+			],
+			[
+				'name' => 'accountname',
+				'type' => 'varchar(80)',
+				'not_null' => false
+			],
+			[
+				'name' => 'balance',
+				'type' => 'double(15,2)',
+				'not_null' => false,
+				'default' => '0'
+			],
+			[
+				'name' => 'bankname',
+				'type' => 'varchar(80)',
+				'not_null' => false
+			],
+			[
+				'name' => 'branchname',
+				'type' => 'varchar(80)',
+				'not_null' => false
+			],
+			[
+				'name' => 'sortcode',
+				'type' => 'varchar(20)',
+				'not_null' => false
+			],
+			[
+				'name' => 'branchaddress',
+				'type' => 'varchar(250)',
+				'not_null' => false
+			],
+			[
+				'name' => 'opendate',
+				'type' => 'date',
+				'not_null' => false
+			],
+			[
+				'name' => 'contactperson',
+				'type' => 'varchar(80)',
+				'not_null' => false
+			],
+			[
+				'name' => 'phonenumber',
+				'type' => 'varchar(50)',
+				'not_null' => false
+			],
+			[
+				'name' => 'faxnumber',
+				'type' => 'varchar(50)',
+				'not_null' => false
+			],
+			[
+				'name' => 'website',
+				'type' => 'varchar(50)',
+				'not_null' => false
+			],
+			[
+				'name' => 'BalanceDate',
+				'type' => 'date',
+				'not_null' => false
+			]
+		],
+		'primary' => [
+			'recordid'
+		],
+		'foreign' => [
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
 	return $tables;
 }
