@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once(dirname(__FILE__) . '/xajax.inc.php');
+include "../AJAX/xajax.inc.php";
+include "../DataBase/dbconnection.php";
 function setAge($date){
 $objResponse =& new xajaxResponse();
 $age=floor((strtotime(date('d-M-Y'))-strtotime($date))/(86400*365));
@@ -171,8 +172,8 @@ print"<form name=\"Form\" method=\"post\" enctype=\"multipart/form-data\">
 <td>Gender</td><td><input name=\"opt_gender\" type=\"radio\" value=\"Male\" checked>Male<input name=\"opt_gender\" type=\"radio\" value=\"Female\">Female</td>
 <td>Marital Status</td><td><select name=\"maritaldrop\"><option value=\"none\">select</option><option value=\"Single\">Single</option><option value=\"Married\">Married</option><option value=\"Widow\">Widow</option></select></td>
 <td>Nationality</td><td><select name=\"nationdrop\" id=\"nationdrop\"><option value=\"none\">Select</option>";
-$con=mysql_connect("192.168.15.26","root","admin");
-$db=mysql_select_db("heos",$con);
+// $con=mysql_connect("192.168.15.26","root","admin");
+// $db=mysql_select_db("heos",$con);
 $sql=("select Countrycode,CountryName from countrydetails ORDER BY CountryName");
 $rs=mysql_query($sql,$con);
 while($a=mysql_fetch_array($rs))
@@ -191,8 +192,8 @@ print"</select></td></tr>
 <td>Date of Joining</td><td><input type=\"text\" readonly name=\"dateofjoiningtext\" id=\"dateofjoiningtext\" size=13>
 <a href=\"javascript:NewCal('dateofjoiningtext','ddmmmyyyy')\"><img src=\"./Images/cal.gif\" alt=\"Pick a date\" width=\"20\" height=\"20\" border=\"0\" valign=\"bottom\"></a></td>
 <td>Designation</td><td ><select name=\"designationdrop\" onchange=\"if(this.selectedIndex!=0) document.getElementById('typeofjobdrop').disabled=0; else{  document.getElementById('typeofjobdrop').selectedIndex=0; document.getElementById('typeofjobdrop').disabled=1; salaryDisable(1); }\"><option value=\"none\">Select</option>";
-$con=mysql_connect("192.168.15.26","root","admin");
-$db=mysql_select_db("heos",$con);
+// $con=mysql_connect("192.168.15.26","root","admin");
+// $db=mysql_select_db("heos",$con);
 $sql=("select distinct(designationname) from designation");
 $rs=mysql_query($sql,$con);
 while($a=mysql_fetch_array($rs))
@@ -206,7 +207,7 @@ print"</select></td>
 </tr>
 <tr>
 <td>Local Citizen</td><td><input name=\"opt_local\" id=\"opt_yes1\" type=\"radio\" value=\"Yes\" disabled>Yes<input name=\"opt_local\"  id=\"opt_yes2\" type=\"radio\" value=\"No\" disabled>No</td>
-<td>Salary</td><td><input type=\"text\" disabled name=\"salarytxt\" value=\"0.00\" id=\"salarytxt\" size=5> <font size=3>£</td>
+<td>Salary</td><td><input type=\"text\" disabled name=\"salarytxt\" value=\"0.00\" id=\"salarytxt\" size=5> <font size=3>ï¿½</td>
 <td>Salary Mode</td><td colspan=2><input name=\"opt_hours\" disabled id=\"opt_hours1\" type=\"radio\" value=\"Hours\"> &nbsp;Hour&nbsp;<input name=\"opt_hours\" disabled id=\"opt_hours2\" type=\"radio\" value=\"Monthly\">Monthly</td>
 </tr>
 </table><br>
@@ -352,8 +353,8 @@ $f11=$_POST['contactperson'];
  $f15=$_POST['phone'];
  $f16=$_POST['fax'];
 
-$con=mysql_connect("192.168.15.26","root","admin");
-$db=mysql_select_db("heos",$con);
+// $con=mysql_connect("192.168.15.26","root","admin");
+// $db=mysql_select_db("heos",$con);
 $queryinsert=mysql_query("SELECT count(*) FROM staffpersonalinformation");
 $attendancecount=mysql_result($queryinsert,0);
 $count=$attendancecount+1;
@@ -432,7 +433,7 @@ copy($_FILES['file']['tmp_name'],"StaffUpload/".$staffname.'.'.$ext);
 function uploadFunction1()
 {
 $_SESSION['staffid']=$staffid;
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+// $con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
 $create="CREATE TABLE `stafffileattached` (
 `RecordId` bigint(50) NOT NULL auto_increment,
 `staffid` varchar(50) default NULL,

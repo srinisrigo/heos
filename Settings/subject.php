@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "../AJAX/MasterAjax.php";
-include "./DataBase/dbconnection.php";
+include "../DataBase/dbconnection.php";
 ?>
 
 <html><head><?php $xajax->printJavascript();?> </head>

@@ -1,6 +1,7 @@
 <?php session_start();
 include "../DataBase/dbconnection.php";
-require_once(dirname(__FILE__) . '/xajax.inc.php');
+include "../AJAX/xajax.inc.php";
+// require_once(dirname(__FILE__) . '/xajax.inc.php');
 function setSlots($intake,$slotdate){
 $objResponse =& new xajaxResponse();
 if($intake=='none') return $objResponse->getXML();

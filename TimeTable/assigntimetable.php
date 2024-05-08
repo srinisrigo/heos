@@ -1,6 +1,6 @@
 <?php session_start(); ?>
 <?php
-require_once(dirname(__FILE__) . '/xajax.inc.php');
+require ('../AJAX/xajax.inc.php');
 function getIntakes($recordid){
 $objResponse =& new xajaxResponse();
 $objResponse->addScript("document.getElementById('intake').options.length=1;");
@@ -11,7 +11,7 @@ $objResponse->addScript("document.getElementById('nextWeeks').innerHTML='';");
 $objResponse->addScript("document.getElementById('intake').options.length=0;");
 $objResponse->addScript("addOption('intake','Select','none');");
 if($recordid=='none') return $objResponse->getXML();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $select=mysql_query("select batch from timetablenamech where recordid='$recordid'"); $batch=mysql_result($select,0);
 $Abatch=explode('.',$batch);
 foreach($Abatch as $k=>$intake){
@@ -31,7 +31,7 @@ $objResponse->addScript("document.getElementById('nextWeeks').innerHTML='';");
 $objResponse->addScript("document.getElementById('ccode').options.length=0;");
 $objResponse->addScript("addOption('ccode','Select','none');");
 if($intake=='none') return $objResponse->getXML();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $select=mysql_query("select courses from intakecourseslist where intake='$intake'"); $courseid=mysql_result($select,0);
 $Acourseid=explode('.',$courseid);
 foreach($Acourseid as $k=>$courseid){
@@ -45,7 +45,7 @@ $objResponse =& new xajaxResponse();
 $objResponse->addScript("document.getElementById('section').options.length=0;");
 $objResponse->addScript("addOption('section','Select','none');");
 if($intake=='none'|$courseid=='none') return $objResponse->getXML();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $select=mysql_query("select * from sectionmaster where Intake='$intake' and Courseid='$courseid'");
 while($arr=mysql_fetch_array($select)){  $sectionid=$arr['SectionId']; $sectionname=$arr['Section'];
 $objResponse->addScript("addOption('section','" . $sectionname . "','" . $sectionid . "');"); }
@@ -61,7 +61,7 @@ $objResponse->addScript("document.getElementById('assign').innerHTML='';");
 $objResponse->addScript("document.getElementById('nextWeeks').innerHTML='';");
 if($ttid=='none') return $objResponse->getXML();
 if($intake=='none') return $objResponse->getXML();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $_SESSION['ttid']=$ttid; $_SESSION['intake']=$intake; $_SESSION['currentweek']=$week;
 $select=mysql_query("select * from timetablenamech where recordid='$ttid'");
 while($ar=mysql_fetch_array($select)){ $totalnumberofweeks=$ar['numberofweeks'];
@@ -199,7 +199,7 @@ $objResponse =& new xajaxResponse();
 $objResponse->addScript("document.getElementById('assign').innerHTML='';");
 $objResponse->addScript("document.getElementById('nextWeeks').innerHTML='';");
 
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $ttid=$_SESSION['ttid']; $intake=$_SESSION['intake']; $_SESSION['currentweek']=$week;
 $select=mysql_query("select * from timetablenamech where recordid='$ttid'");
 while($ar=mysql_fetch_array($select)){ $totalnumberofweeks=$ar['numberofweeks'];
@@ -334,7 +334,7 @@ function setSubStaffRoom($passvalue){
 $objResponse =& new xajaxResponse();
 $objResponse->addScript("document.getElementById('nextWeeks').innerHTML='';");
 $_SESSION['passvalue']=$passvalue;
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $Apassvalue=explode('_',$passvalue);
 $intake=$Apassvalue[1]; $day=$Apassvalue[3];
 $todaydate=date('Y-m-d',strtotime($Apassvalue[2]));
@@ -415,7 +415,7 @@ $_SESSION['subjectcode']=$subjectcode;
 $objResponse->addScript("document.getElementById('staffid').options.length=0;");
 $objResponse->addScript("addOption('staffid','Select','none');");
 if($subjectcode=='none') return $objResponse->getXML();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $selectintakes=mysql_query("select * from staffavailabilitytimetable where subjectcode='$subjectcode'");
 while($ar=mysql_fetch_array($selectintakes)){ $addflag=0;
 $staffid=$ar['staffid']; $availability=$ar['availability']; $Aavailability=explode('.',$availability);
@@ -430,7 +430,7 @@ return $objResponse->getXML();
 
 function setSlotrepeat($ckecked,$weekno){
 $objResponse =& new xajaxResponse();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $ttid=$_SESSION['ttid']; $intake=$_SESSION['intake']; $curweek=$_SESSION['currentweek'];
 $picweeks=mysql_query("select numberofslots from timetablenamech where recordid='$ttid'");
 $tw=mysql_result($picweeks,0); $w=$_SESSION['currentweek'];
@@ -454,7 +454,7 @@ return $objResponse->getXML();
 
 function setWeekrepeat($ckecked,$weekno){
 $objResponse =& new xajaxResponse();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $ttid=$_SESSION['ttid']; $intake=$_SESSION['intake']; $curweek=$_SESSION['currentweek'];
 $picweeks=mysql_query("select numberofweeks from timetablenamech where recordid='$ttid'");
 $tw=mysql_result($picweeks,0); $w=$_SESSION['currentweek'];
@@ -478,7 +478,7 @@ return $objResponse->getXML();
 
 function saveTimetable($btnvalue){
 $objResponse =& new xajaxResponse();
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $passvalue=$_SESSION['passvalue'];
 $Apassvalue=explode('_',$passvalue);
 
@@ -523,7 +523,7 @@ return $objResponse->getXML(); }
 function editTimetable($passvalue){ $objResponse =& new xajaxResponse();
 $_SESSION['passvalue']=$passvalue;
 $objResponse->addScript("document.getElementById('nextWeeks').innerHTML='';");
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 $Apassvalue=explode('_',$passvalue);
 $intake=$Apassvalue[1]; $day=$Apassvalue[3];
 $todaydate=date('Y-m-d',strtotime($Apassvalue[2]));
@@ -598,7 +598,7 @@ function changeimage(obj,cname){ obj.className=cname; }
 </head>
 <body>
 <?php
-$con=mysql_connect('192.168.15.26','root','admin'); $db=mysql_select_db('heos');
+$con=mysql_connect('172.29.0.2','root','tcfPm)y_Io7nLt9c'); $db=mysql_select_db('heos');
 print "<table align=center cellspacing=1 cellpadding=0><caption><h3>Time Table</caption>
 <tr><td>Time Table Name</td>
 <td><select class=\"select\" name=\"ttname\" id=\"ttname\" onChange=\"return xajax_getIntakes(this.value);\">

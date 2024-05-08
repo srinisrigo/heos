@@ -1,11 +1,10 @@
-version: '2.3.3'
+version: '3'
 
 services:
 
-  heosdb:
-    container_name: heosdb
-    image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
+  heosolddb:
+    container_name: heosolddb
+    image: mysql:5.5
     environment:
       MYSQL_ROOT_PASSWORD: tcfPm)y_Io7nLt9c
       MYSQL_USER: admin
@@ -13,54 +12,32 @@ services:
       MYSQL_DATABASE: heos
       MYSQL_ROOT_HOST: "%"
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       vpcbr:
-        ipv4_address: 172.26.0.2
+        ipv4_address: 172.29.0.2
         
-  heosopencart-apache:
-    container_name: heosopencart-apache
-    image: sample:8.0-apache
+  heosold-apache:
+    container_name: heosold-apache
+    # image: php:5.6-apache
     build: .
     depends_on:
-      - heosdb
+      - heosolddb
     environment:
       - DEBUG=false
     volumes:
-      - ./heosopencart/upload:/var/www/html/
+      - .:/var/www/html/
     ports:
       - 3030:80
       - 3031:443
     networks:
       vpcbr:
-        ipv4_address: 172.26.0.3
-        
-# https://github.com/srinisrigo/heos.git
-  heos-apache:
-    container_name: heos-apache
-    image: sample:8.0-apache
-    build: .
-    depends_on:
-      - heosdb
-    environment:
-      - DEBUG=false
-    volumes:
-      - ./heos:/var/www/html/
-    ports:
-      - 4040:80
-      - 4041:443
-    networks:
-      vpcbr:
-        ipv4_address: 172.26.0.4
+        ipv4_address: 172.29.0.3
 
 networks:
   vpcbr:
     driver: bridge
     ipam:
      config:
-       - subnet: 172.26.0.0/16
-         gateway: 172.26.0.1
-
-# Volumes
-# volumes:
-#   db_conf:
+       - subnet: 172.29.0.0/16
+         gateway: 172.29.0.1
